@@ -1,0 +1,6 @@
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[tool.pylyzer.python]
+path = ".venv/bin/python"
