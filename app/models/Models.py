@@ -8,6 +8,7 @@ class UserModel(Base):
     __tablename__: str = "users"
     user_id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str]
+    name: Mapped[str]
     hashed_password: Mapped[str]
     posts: Mapped[list["PostModel"]] = relationship(
         "PostModel", cascade="all, delete-orphan", backref="post"
@@ -17,9 +18,12 @@ class UserModel(Base):
     )
     disabled: Mapped[bool]
 
-    def __init__(self, username: str, hashed_password: str, disabled: bool = False):
+    def __init__(
+        self, username: str, name: str, hashed_password: str, disabled: bool = False
+    ):
         super().__init__()
         self.username = username
+        self.name = name
         self.hashed_password = hashed_password
         self.disabled = disabled
 

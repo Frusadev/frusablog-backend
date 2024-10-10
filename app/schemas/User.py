@@ -8,6 +8,7 @@ from app.schemas.Post import Post
 class User(BaseModel):
     user_id: int | None = None
     username: str
+    name: str
     hashed_password: str
     posts: list[Post] | None = None
     comments: list[Comment] | None = None
@@ -16,6 +17,7 @@ class User(BaseModel):
     def to_user_model(self) -> UserModel:
         model = UserModel(
             username=self.username,
+            name=self.name,
             hashed_password=self.hashed_password,
             disabled=self.disabled
         )
@@ -37,6 +39,7 @@ class User(BaseModel):
 
     def create_user(self, model: UserModel):
         self.user_id = model.user_id
+        self.name = model.name
         self.username = model.username
         self.hashed_password = model.hashed_password
         self.disabled = model.disabled

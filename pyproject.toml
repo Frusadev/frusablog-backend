@@ -1,6 +1,7 @@
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+typeCheckingMode = "standard"
 
 [tool.pylyzer.python]
 path = ".venv/bin/python"
