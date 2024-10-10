@@ -18,7 +18,7 @@ def get_user_by_name(username: str) -> User:
             session.query(UserModel).where(UserModel.username == username).first()
         )
         if user_model:
-            user = User(username="", hashed_password="")
+            user = User(username="", name="", hashed_password="")
             user.create_user(user_model)
             return user
         raise ElementNotFoundError(f"Unable to find user: {username}")
@@ -36,7 +36,7 @@ def get_user(user_id: int) -> User:
     with local_session as session:
         user_model = session.get(UserModel, user_id)
         if user_model:
-            user = User(username="", hashed_password="")
+            user = User(username="", name="", hashed_password="")
             user.create_user(user_model)
             return user
         raise ElementNotFoundError(f"Unable to find user {user_id}")
@@ -109,7 +109,9 @@ def get_all_users():
     with local_session as session:
         user_models = session.query(UserModel).all()
         users = [
-            User(username=u.username, hashed_password=u.hashed_password).create_user(u)
+            User(
+                username=u.username, name="", hashed_password=u.hashed_password
+            ).create_user(u)
             for u in user_models
         ]
         return users
