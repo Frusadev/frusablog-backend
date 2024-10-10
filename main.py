@@ -5,8 +5,14 @@ from app.api.endpoints.user import user_router
 from app.api.endpoints.comment import comment_router
 from app.api.endpoints.auth.auth_handler import auth_router
 
+routers = [
+    user_router,
+    post_router,
+    comment_router,
+    auth_router
+]
+
 app = FastAPI()
-app.include_router(user_router)
-app.include_router(post_router)
-app.include_router(comment_router)
-app.include_router(auth_router)
+
+for router in routers:
+    app.include_router(router)
