@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - Daniel Ametsowou's Blog</title>
+    <style>
+      body {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          line-height: 1.6;
+          color: #333333;
+          background-color: #f5f5f5;
+          margin: 0;
+          padding: 0;
+      }
+      .container {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #ffffff;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+          background-color: #000000;
+          color: white;
+          padding: 25px;
+          text-align: center;
+      }
+      .logo {
+          font-size: 24px;
+          font-weight: bold;
+          letter-spacing: 1px;
+          color: white;
+      }
+      .content {
+          padding: 30px;
+      }
+      h1 {
+          color: #000000;
+          margin-top: 0;
+          font-size: 22px;
+      }
+      p {
+          margin-bottom: 20px;
+      }
+      .verification-button {
+          display: inline-block;
+          background-color: #000000;
+          color: inherit;
+          text-decoration: none;
+          padding: 12px 30px;
+          border-radius: 4px;
+          font-weight: bold;
+          margin: 15px 0;
+          transition: background-color 0.3s;
+      }
+      .verification-button:hover {
+          background-color: #333333;
+      }
+      .divider {
+          height: 1px;
+          background-color: #eeeeee;
+          margin: 25px 0;
+      }
+      .footer {
+          padding: 15px 30px;
+          text-align: center;
+          font-size: 13px;
+          color: #777777;
+          background-color: #f9f9f9;
+      }
+      .verification-code {
+          background-color: #f1f1f1;
+          font-family: 'Courier New', monospace;
+          padding: 12px 20px;
+          margin: 15px 0;
+          border-radius: 4px;
+          font-size: 20px;
+          text-align: center;
+          letter-spacing: 2px;
+      }
+      .alternative-link {
+          word-break: break-all;
+          color: #000000;
+      }
+      .expiry-note {
+          font-size: 13px;
+          color: #777777;
+          font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">DANIEL AMETSOWOU</div>
+      </div>
+      <div class="content">
+        <h1>Verify Your Email Address</h1>
+        <p>Hello {{ user_name }},</p>
+        <p>Please verify your email address to complete your subscription to Daniel Ametsowou's blog. This helps ensure that we can securely deliver content updates to you.</p>
+        <div style="text-align: center;">
+          <a href="{{ verification_link }}" class="verification-button">Verify Email</a>
+        </div>
+        <p>If the button doesn't work, you can copy and paste this link into your browser:</p>
+        <p class="alternative-link">{{ verification_link }}</p>
+        <p class="expiry-note">This verification link will expire in {{ expiry_time }} minutes.</p>
+        <div class="divider"></div>
+        <p>If you didn't request this verification, please ignore this message or contact us at {{ contact_email }}.</p>
+        <p>Thanks,<br>
+          Daniel Ametsowou<br>
+          ametsowou.me</p>
+      </div>
+      <div class="footer">
+        <p>© {{ current_year }} Daniel Ametsowou. All rights reserved.</p>
+        <p>You're receiving this email because someone (hopefully you) signed up at <a href="https://blog.ametsowou.me" style="color: #000000;">ametsowou.me</a></p>
+      </div>
+    </div>
+  </body>
+</html>

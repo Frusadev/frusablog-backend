@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Daniel Ametsowou's Blog</title>
+    <style>
+      body {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          line-height: 1.6;
+          color: #333333;
+          background-color: #f5f5f5;
+          margin: 0;
+          padding: 0;
+      }
+      .container {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #ffffff;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+          background-color: #000000;
+          color: white;
+          padding: 30px;
+          text-align: center;
+      }
+      .logo {
+          font-size: 28px;
+          font-weight: bold;
+          margin-bottom: 5px;
+          letter-spacing: 1px;
+      }
+      .tagline {
+          font-size: 16px;
+          opacity: 0.9;
+          font-style: italic;
+      }
+      .content {
+          padding: 30px;
+      }
+      h1 {
+          color: #000000;
+          margin-top: 0;
+          border-bottom: 2px solid #eeeeee;
+          padding-bottom: 10px;
+      }
+      p {
+          margin-bottom: 20px;
+      }
+      .verification-button {
+          display: inline-block;
+          background-color: #000000;
+          color: white;
+          text-decoration: none;
+          padding: 12px 25px;
+          border-radius: 4px;
+          font-weight: bold;
+          margin: 20px 0;
+          transition: background-color 0.3s;
+      }
+      .verification-button:hover {
+          background-color: #333333;
+      }
+      .divider {
+          height: 1px;
+          background-color: #eeeeee;
+          margin: 30px 0;
+      }
+      .footer {
+          padding: 20px 30px;
+          text-align: center;
+          font-size: 14px;
+          color: #777777;
+          background-color: #f9f9f9;
+      }
+      .social-links {
+          margin: 15px 0;
+      }
+      .social-link {
+          display: inline-block;
+          margin: 0 10px;
+          color: #000000;
+          text-decoration: none;
+          font-weight: bold;
+      }
+      .featured-post {
+          background-color: #f9f9f9;
+          border-left: 3px solid #000000;
+          padding: 15px;
+          margin: 20px 0;
+      }
+      .featured-post h3 {
+          margin-top: 0;
+          color: #000000;
+      }
+      .alternative-link {
+          word-break: break-all;
+          color: #000000;
+      }
+      .code-snippet {
+          background-color: #f1f1f1;
+          border-left: 3px solid #000000;
+          padding: 15px;
+          margin: 20px 0;
+          font-family: 'Courier New', monospace;
+          font-size: 14px;
+          overflow-x: auto;
+      }
+      img.signature {
+          max-width: 150px;
+          margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">DANIEL AMETSOWOU</div>
+        <div class="tagline">Fullstack Software Development Insights</div>
+      </div>
+      <div class="content">
+        <h1>Welcome, {{ user_name }}!</h1>
+        <p>Thank you for subscribing to my blog! I'm Daniel Ametsowou, a fullstack software developer, and I'm excited to have you join my community of tech enthusiasts and developers. Your support means the world to me, and I can't wait to share my coding journey, insights, and projects with you.</p>
+        <div class="code-snippet">
+          <pre><code>// Welcome message for {{ user_name }}
+function welcomeSubscriber(name) {
+  console.log(`Hello ${name}! Welcome to my tech blog.`);
+  return `Subscription activated for ${name}`;
+}
+
+welcomeSubscriber("{{ user_name }}");
+// Output: Subscription activated for {{ user_name }}</code></pre>
+        </div>
+        <p>To ensure you receive all updates and to verify your email address, please click the button below:</p>
+        <div style="text-align: center;">
+          <a href="{{ verification_link }}" class="verification-button">Verify Email Address</a>
+        </div>
+        <p>If the button doesn't work, you can also copy and paste the following link into your browser:</p>
+        <p class="alternative-link">{{ verification_link }}</p>
+        <div class="divider"></div>
+        <p>If you have any questions or topics you'd like me to explore in future posts, feel free to reply directly to this email or reach out through my website.</p>
+        <p>Happy coding!</p>
+        <p><strong>Daniel Ametsowou</strong></p>
+      </div>
+      <div class="footer">
+        <div class="social-links">
+          <a href="{{ github_link }}" class="social-link">GitHub</a>
+          <a href="{{ linkedin_link }}" class="social-link">LinkedIn</a>
+        </div>
+        <p>© {{ current_year }} Daniel Ametsowou. All rights reserved.</p>
+        <p>You're receiving this email because you subscribed on <a href="https://blog.ametsowou.me" style="color: #000000;">blog.ametsowou.me</a></p>
+        <p><a href="{{ unsubscribe_link }}" style="color: #777777;">Unsubscribe</a> | <a href="{{ preferences_link }}" style="color: #777777;">Manage preferences</a></p>
+      </div>
+    </div>
+  </body>
+</html>
