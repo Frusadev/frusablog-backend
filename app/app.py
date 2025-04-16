@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import env
 from app.routes.auth import auth_router
@@ -18,7 +19,15 @@ app.include_router(comment_router, prefix=API_VERSION)
 app.include_router(media_router, prefix=API_VERSION)
 app.include_router(posttag_router, prefix=API_VERSION)
 app.include_router(user_router, prefix=API_VERSION)
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000"
+    ],  # Or ["http://localhost:3000"] for stricter control
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 DEBUG = env.get_env("DEBUG", "True").lower() == "true"
 

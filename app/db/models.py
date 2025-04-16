@@ -43,6 +43,8 @@ class User(SQLModel, table=True):
     location: Optional[str]
     work_title: Optional[str]
     account_verified: bool = False
+    poster: bool = False
+    in_newsletter: bool = False
     role: "Role" = Relationship(back_populates="users")
     posts: list["Post"] = Relationship(
         back_populates="author", cascade_delete=True
@@ -94,6 +96,7 @@ class User(SQLModel, table=True):
             work_industry=self.work_industry,
             location=self.location,
             work_title=self.work_title,
+            poster=self.poster,
         )
 
 

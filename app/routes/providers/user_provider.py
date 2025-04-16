@@ -258,3 +258,7 @@ async def delete_user(
 
 async def get_current_user(user: User):
     return user.to_dto()
+
+
+async def can_post(user: User):
+    return user.poster

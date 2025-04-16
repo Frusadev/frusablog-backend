@@ -34,6 +34,37 @@ async def get_posts(
     )
 
 
+@post_router.get("/posts/latest")
+async def get_latest_posts(
+    db_session: Annotated[Session, Depends(get_db_session)],
+    offset: int = 0,
+    limit: int = 5,
+):
+    """Get the latest posts"""
+    print("Lol")
+    return await post_provider.get_latest_posts(
+        db_session=db_session,
+        skip=offset,
+        limit=limit,
+    )
+
+
+@post_router.get("/posts/search")
+async def search_posts(
+    db_session: Annotated[Session, Depends(get_db_session)],
+    query: str,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100),
+):
+    """Search for posts by title or content"""
+    return await post_provider.search_posts(
+        db_session=db_session,
+        query=query,
+        skip=skip,
+        limit=limit,
+    )
+
+
 @post_router.get("/posts/{post_id}", response_model=PostDTO)
 async def get_post(
     db_session: Annotated[Session, Depends(get_db_session)],

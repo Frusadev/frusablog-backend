@@ -3,7 +3,7 @@ from typing import List, Optional
 from uuid import UUID
 
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session, col, select
 from starlette.status import HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND
 
 from app.db.models import Media, Post, PostMedia, PostTag, User
@@ -62,7 +62,7 @@ async def get_post(
             status_code=HTTP_403_FORBIDDEN, detail="Post not available."
         )
 
-    return post
+    return post.to_dto()
 
 
 async def create_post(
@@ -101,6 +101,7 @@ async def create_post(
         resource_name=POST_RESOURCE,
         resource_id=str(post.post_id),
         action_name=ACTION_CRUD,
+        commit=False,
     )
 
     db_session.add(post)
@@ -380,3 +381,36 @@ async def remove_media_from_post(
     db_session.commit()
 
     return post.to_dto()
+
+
+async def get_latest_posts(
+    db_session: Session,
+    skip: int = 0,
+    limit: int = 5,
+):
+    """Get the latest posts"""
+    query = select(Post).order_by(Post.created_at).offset(skip).limit(limit)
+    posts = db_session.exec(query).all()
+    return [post.to_dto() for post in posts]
+
+
+async def search_posts(
+    db_session: Session,
+    query: str,
+    skip: int = 0,
+    limit: int = 10,
+):
+    """Search for posts based on a query string"""
+    search_query = (
+        select(Post)
+        .where(
+            col(Post.title).contains(query)
+            | col(Post.content).contains(query)
+            | col(Post.description).contains(query)
+            | col(Post.author_username).contains(query)
+        )
+        .offset(skip)
+        .limit(limit)
+    )
+    posts = db_session.exec(search_query).all()
+    return [post.to_dto() for post in posts]

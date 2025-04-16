@@ -150,3 +150,9 @@ async def current_user(
     """Get the current user's profile"""
     profile = await user_provider.get_current_user(user=current_user)
     return profile
+
+
+@user_router.get("/me/can-post", response_model=bool)
+async def can_post(user: Annotated[User, Depends(get_current_user)]):
+    """Check if the current user can post"""
+    return await user_provider.can_post(user=user)

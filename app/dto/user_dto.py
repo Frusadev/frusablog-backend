@@ -15,3 +15,4 @@ class UserDTO(BaseModel):
     location: Optional[str]
     work_title: Optional[str]
     post_count: Optional[int] = None
+    poster: bool

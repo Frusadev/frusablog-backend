@@ -14,10 +14,6 @@ from app.config import env
 from app.db.models import AuthSession, LoginSession, Role, User
 from app.db.setup import get_db_session
 from app.log.console import log_info
-from app.miscellaneous.error_codes import (
-    ERR_INVALID_CREDENTIALS,
-    ERR_NEED_VERIFICATION,
-)
 from app.security.password import hash_password, verify_password
 from app.services.email import send_templated_email
 from app.utils.crypto import gen_id
@@ -105,6 +101,9 @@ async def register(
         fallback_message=f"Hello {user.display_name},\n\n here is your verification link: {ACCOUNT_VERIFICATION_URL}?token={auth_session.session_id}",
     )
     log_info(f"Registerd new user: {user.username}: {user.email}")
+    return {
+        "message": "User registered successfully.",
+    }
 
 
 async def login(
@@ -128,14 +127,14 @@ async def login(
     user = db_session.exec(stmt).first()
     if not user:
         raise HTTPException(
-            status_code=HTTP_409_CONFLICT,
-            detail=ERR_INVALID_CREDENTIALS,
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials.",
         )
 
     if not verify_password(password, user.hashed_password):
         raise HTTPException(
-            status_code=HTTP_409_CONFLICT,
-            detail=ERR_INVALID_CREDENTIALS,
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials.",
         )
 
     if (
@@ -165,7 +164,7 @@ async def login(
 
         raise HTTPException(
             status_code=HTTP_401_UNAUTHORIZED,
-            detail=ERR_NEED_VERIFICATION,
+            detail="Account not verified.",
         )
 
     login_session = LoginSession(
