@@ -7,6 +7,7 @@ from sqlmodel import Field, Relationship, Session, SQLModel
 
 from app.dto.comment_dto import CommentDTO
 from app.dto.media_dto import ContentTypeLiteral, MediaDTO
+from app.dto.notification_dto import NotificationDTO
 from app.dto.post_dto import PostDTO
 from app.dto.posttag_dto import PostTagDTO
 from app.dto.user_dto import UserDTO
@@ -68,6 +69,9 @@ class User(SQLModel, table=True):
     )
     medias: list["Media"] = Relationship(
         back_populates="uploader", cascade_delete=True
+    )
+    notifications: list["Notification"] = Relationship(
+        back_populates="user", cascade_delete=True
     )
 
     def update_from_dto(
@@ -157,12 +161,41 @@ class PostMedia(SQLModel, table=True):
         )
 
 
+class Notification(SQLModel, table=True):
+    notification_id: UUID = Field(default_factory=uuid4, primary_key=True)
+    username: str = Field(foreign_key="user.username")
+    content: str
+    action: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    read: bool = False
+    user: User = Relationship(back_populates="notifications")
+
+    def to_dto(self) -> NotificationDTO:
+        return NotificationDTO(
+            id=self.notification_id,
+            content=self.content,
+            username=self.username,
+            viewed=self.read,
+        )
+
+    def update_from_dto(
+        self, dto: NotificationDTO, db_session: Session, commit: bool = True
+    ):
+        self.content = dto.content
+        self.read = dto.viewed
+
+        if commit:
+            db_session.add(self)
+            db_session.commit()
+
+
 class Post(SQLModel, table=True):
     post_id: UUID = Field(default_factory=uuid4, primary_key=True)
     author_username: str = Field(foreign_key="user.username")
     created_at: datetime
     last_modified: datetime
     modified: bool = False
+    featured: bool = False
     title: str
     description: str
     content: str
